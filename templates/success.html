@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | ByteBound Electronics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root { --success-green: #10b981; --primary-blue: #2563eb; }
+        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
+        
+        .success-card {
+            max-width: 600px;
+            margin: 60px auto;
+            border: none;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            background: white;
+            overflow: hidden;
+        }
+
+        .success-header {
+            background: linear-gradient(135deg, var(--success-green), #059669);
+            padding: 40px;
+            color: white;
+            text-align: center;
+        }
+
+        .confetti-icon {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .receipt-details { padding: 40px; }
+        .detail-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .detail-label { color: #64748b; font-weight: 500; }
+        .detail-value { color: #1e293b; font-weight: 700; }
+
+        .order-id-badge {
+            background: #f1f5f9;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #475569;
+        }
+
+        /* Print Styles */
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; }
+            .success-card { box-shadow: none; margin: 0; max-width: 100%; }
+            .success-header { background: white !important; color: black; border-bottom: 2px solid #eee; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container px-3">
+    <div class="success-card">
+        <div class="success-header">
+            <i class="bi bi-check-circle-fill confetti-icon"></i>
+            <h2 class="fw-bold mb-0">Order Confirmed!</h2>
+            <p class="opacity-75 mb-0 mt-2">Thank you for choosing ByteBound Electronics.</p>
+        </div>
+
+        <div class="receipt-details">
+            <div class="text-center mb-5">
+                <span class="small text-muted text-uppercase letter-spacing-1">Transaction ID</span><br>
+                <span class="order-id-badge">#{{ order_id }}</span>
+            </div>
+
+            <h5 class="fw-bold mb-4 border-bottom pb-2">Order Summary</h5>
+            
+            <div class="detail-row">
+                <span class="detail-label">Customer Name</span>
+                <span class="detail-value">{{ name }}</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Payment Status</span>
+                <span class="detail-value text-success">Paid via Secure Gateway</span>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="detail-row mb-0">
+                <span class="detail-label fs-5">Total Amount</span>
+                <span class="detail-value fs-5 text-primary">₹{{ "{:,.2f}".format(total) }}</span>
+            </div>
+
+            <div class="bg-light p-3 rounded-3 mt-4 mb-5">
+                <p class="small text-muted mb-0">
+                    <i class="bi bi-info-circle me-2"></i> 
+                    A confirmation email has been sent to your registered address. Most orders arrive within 3-5 business days.
+                </p>
+            </div>
+
+            <div class="d-grid gap-2 no-print">
+                <button onclick="window.print()" class="btn btn-dark py-3 rounded-3 fw-bold">
+                    <i class="bi bi-printer me-2"></i> Print Receipt
+                </button>
+                <a href="{{ url_for('store') }}" class="btn btn-outline-primary py-3 rounded-3 fw-bold">
+                    Back to Storefront
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center no-print pb-5">
+        <p class="text-muted small">Need help? <a href="#" class="text-decoration-none">Contact Support</a></p>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

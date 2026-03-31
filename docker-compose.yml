@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # The Flask Web Application
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      # Inside the docker network, we use the service name 'db' and default port 27017
+      - MONGO_URI=mongodb://db:27017/fynode_store
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+      - 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
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - bytebound-net
+
+  # The MongoDB Database
+  db:
+    image: mongo:latest
+    ports:
+      # Map internal 27017 to host 27018 to match your Compass settings
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - bytebound-net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  bytebound-net:
+    driver: bridge
+
+volumes:
+  mongo-data:
