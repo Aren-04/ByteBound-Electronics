@@ -69,4 +69,4 @@ ByteBot isn't your average "robotic" assistant. It was designed to be:
 - [ ] Cloud deployment via Render/Railway with MongoDB Atlas.
 
 ---
-**Developed by [Aren](https://github.com/Aren-04)** *Student & Backend Developer*
+
